@@ -1,4 +1,5 @@
 import tkinter as tk
+from functools import partial
 from tkinter import messagebox
 
 from tkshopsystem.auth import check_login_hn
@@ -16,6 +17,8 @@ class SupermarketGUI(tk.Tk):
     def __init__(self, storage: list[dict]):
         super().__init__()
 
+
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.storage = storage
 
         self.title("超市管理系统")
@@ -42,6 +45,9 @@ class SupermarketGUI(tk.Tk):
 
         self.show_home_page_hn()
 
+    def on_closing(self):
+        if messagebox.askokcancel("退出", "请确认退出系统"):
+            self.destroy()
     def show_home_page_hn(self):
         for widget in self.winfo_children():
             widget.destroy()
